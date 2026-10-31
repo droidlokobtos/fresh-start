@@ -1,8 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 // @ts-expect-error The static interface shares this native browser module with tests.
-import { createCloud, decodeCloud, parentRows } from '../../public/raizes-cloud.mjs';
+import { createCloud, decodeCloud, parentRows, partnershipRow } from '../../public/raizes-cloud.mjs';
 
 describe('Shared family tree rules', () => {
+  it('preserves year-only partnership dates without inventing a day', () => {
+    const row=partnershipRow({id:'u',p1:'a',p2:'b',start:'1985',end:'1998'},'tree');
+    expect(row.start_date).toBeNull();
+    expect(row.end_date).toBeNull();
+    const data=decodeCloud([], [row], [], [], []);
+    expect(data.unions[0].start).toBe('1985');
+    expect(data.unions[0].end).toBe('1998');
+  });
   it('preserves explicit parentage independently of gender', () => {
     expect(parentRows({ id:'child',father:'parent-1',mother:'parent-2',gender:'Masculino' },'tree'))
       .toEqual([{tree_id:'tree',parent_id:'parent-1',child_id:'child',parent_role:'parent'},{tree_id:'tree',parent_id:'parent-2',child_id:'child',parent_role:'parent'}]);
