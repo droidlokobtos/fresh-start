@@ -26,6 +26,6 @@ describe('Shared family tree rules', () => {
     await cloud.insertUnion({id:'union',p1:'person',p2:'',children:['child']});
     expect(calls.filter(c=>c.table==='people'&&c.method!=='GET')).toEqual([]);
     expect(calls.filter(c=>c.method==='POST').map(c=>c.table)).toEqual(['partnerships','partnership_children']);
-    expect(calls.every(c=>['GET','POST'].includes(c.method) && c.headers.apikey==='sb_publishable_test' && !('Authorization' in c.headers))).toBe(true);
+    expect(calls.every(c=>['GET','POST'].includes(c.method) && c.headers['apikey']==='sb_publishable_test' && !('Authorization' in c.headers))).toBe(true);
   });
 });

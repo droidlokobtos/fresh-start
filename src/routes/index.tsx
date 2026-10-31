@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const frame = useRef<HTMLIFrameElement>(null);
   const sendConfiguration = () => {
-    frame.current?.contentWindow?.postMessage({ type: "raizes-cloud-config", config: { url: import.meta.env.VITE_SUPABASE_URL, key: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY } }, window.location.origin);
+    frame.current?.contentWindow?.postMessage({ type: "raizes-cloud-config", config: { url: import.meta.env['VITE_SUPABASE_URL'], key: import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'] } }, window.location.origin);
   };
   useEffect(() => {
     const receive = (event: MessageEvent) => {
