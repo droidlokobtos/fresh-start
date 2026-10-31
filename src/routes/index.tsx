@@ -25,6 +25,7 @@ function Index() {
       if (event.origin === window.location.origin && event.source === frame.current?.contentWindow && event.data?.type === "raizes-cloud-ready") sendConfiguration();
     };
     window.addEventListener("message", receive);
+    sendConfiguration();
     return () => window.removeEventListener("message", receive);
   }, []);
   return (
